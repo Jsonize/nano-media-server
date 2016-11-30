@@ -43,7 +43,10 @@ module.exports = {
 				sources.push(audio_souce);
 			console.log("Transcoding " + request.params.source + (request.query.audio ? " + " + request.query.audio : "") + " -> " + request.params.target);
 			Ffmpeg.ffmpeg_simple(sources, {}, target).callback(function (error, value) {
-				response.status(200).send({});
+				if (error)
+					response.status(500).send(error);
+				else
+					response.status(200).send(value);
 			});
 		});
 		
