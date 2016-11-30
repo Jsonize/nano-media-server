@@ -6,7 +6,7 @@ This is a simple server for file uploading and transcoding.
 ## Getting Started
 
 
-```javascript
+```bash
 	git clone https://github.com/jsonize/nano-media-server.git
 	npm install
 	grunt
@@ -16,8 +16,9 @@ This is a simple server for file uploading and transcoding.
 
 ## Basic Usage
 
-
-TODO
+```bash
+	node server.js
+```
 
 
 
