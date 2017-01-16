@@ -1,13 +1,14 @@
 {
 	"name": "nano-media-server",
 	"description": "Jsonize Nano Media Server for Uploading Files + Transcoding (and mostly for testing)",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"author": "Ziggeo",
 	"repository": "https://github.com/jsonize/nano-media-server",
 	"license": "Apache-2.0",
     "engines": {
 	    "node": ""
  	},
+ 	"main": "server.js",
 	"devDependencies": {
 		"grunt": "",
         "grunt-contrib-jshint": ""
@@ -15,7 +16,7 @@
 	"dependencies": {
 		"express": "",
 		"multer": "",
-		"js-ffmpeg": "",
+		"js-ffmpeg": "~0.0.14",
 		"node-getopt": ""
 	}	
 }
