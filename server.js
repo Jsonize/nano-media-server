@@ -13,7 +13,7 @@ if (opt.ffmpegopt) {
     var ffmpegOptionsObject = JSON.parse(JSON.stringify(opt.ffmpegopt));
 
     if (typeof ffmpegOptionsObject !== 'object')
-        jsonObject = (new Function('return ' + opt.ffmpegopt))();
+        ffmpegOptionsObject = (new Function('return ' + opt.ffmpegopt))();
 }
 
 var server = Server.init({
