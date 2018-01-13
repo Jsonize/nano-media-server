@@ -4,9 +4,10 @@ var Multer = require("multer");
 var Ffmpeg = require("js-ffmpeg");
 
 module.exports = {
-		
+
 	init: function (Config) {
 		var upload = Multer({ storage: Multer.memoryStorage() });
+        var ffmpegOptions = Config.ffmpegOptions;
 
 		var express = Express();
 
@@ -14,9 +15,9 @@ module.exports = {
 			express.use("/static", Express["static"](Config.staticServe));
 
 		var fullFile = function (filename) {
-			return Config.mediaDirectory + "/" + filename; 
+			return Config.mediaDirectory + "/" + filename;
 		};
-		
+
 		express.use(function(request, response, next) {
 			response.header("Access-Control-Allow-Origin", "*");
 			response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -27,13 +28,13 @@ module.exports = {
 			console.log("Streaming " + request.params.filename);
 			response.sendFile(fullFile(request.params.filename));
 		});
-		
+
 		express.post("/files/:filename", upload.single('file'), function (request, response) {
 			console.log("Storing " + request.params.filename);
 			FS.writeFileSync(fullFile(request.params.filename), request.file.buffer);
 			response.status(200).send({});
 		});
-		
+
 		express.post("/files/:source/transcode/:target", function (request, response) {
 			var target = fullFile(request.params.target);
 			var video_source = fullFile(request.params.source);
@@ -42,17 +43,17 @@ module.exports = {
 			if (audio_source)
 				sources.push(audio_souce);
 			console.log("Transcoding " + request.params.source + (request.query.audio ? " + " + request.query.audio : "") + " -> " + request.params.target);
-			Ffmpeg.ffmpeg_simple(sources, {}, target).callback(function (error, value) {
+			Ffmpeg.ffmpeg_simple(sources, {}, target, null, null, ffmpegOptions).callback(function (error, value) {
 				if (error)
 					response.status(500).send(error);
 				else
 					response.status(200).send(value);
 			});
 		});
-		
+
 		return express;
 	},
-	
+
 	run: function (server, port, sslKey, sslCert) {
 		port = port || 5000;
 		if (sslKey && sslCert) {
@@ -70,5 +71,5 @@ module.exports = {
 			});
 		}
 	}
-	
+
 };
