@@ -9,7 +9,10 @@ opt = require('node-getopt').create([
 
 var Server = require(__dirname + "/src/server_service.js");
 
-var jsonObject = (new Function('return ' + opt.ffmpegopt))();
+var jsonObject = JSON.parse(JSON.stringify(opt.ffmpegopt));
+
+if (typeof jsonObject !== 'object')
+    jsonObject = (new Function('return ' + opt.ffmpegopt))();
 
 var server = Server.init({
     mediaDirectory: opt.directory || "/tmp",
