@@ -9,15 +9,17 @@ opt = require('node-getopt').create([
 
 var Server = require(__dirname + "/src/server_service.js");
 
-var jsonObject = JSON.parse(JSON.stringify(opt.ffmpegopt));
+if (opt.ffmpegopt) {
+    var ffmpegOptionsObject = JSON.parse(JSON.stringify(opt.ffmpegopt));
 
-if (typeof jsonObject !== 'object')
-    jsonObject = (new Function('return ' + opt.ffmpegopt))();
+    if (typeof ffmpegOptionsObject !== 'object')
+        jsonObject = (new Function('return ' + opt.ffmpegopt))();
+}
 
 var server = Server.init({
     mediaDirectory: opt.directory || "/tmp",
     staticServe: opt.staticserve ,
-    ffmpegOptions: jsonObject
+    ffmpegOptions: ffmpegOptionsObject || {}
 });
 
 Server.run(server, opt.port || process.env.PORT || 5000, opt.sslkey, opt.sslcert);
