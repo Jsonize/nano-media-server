@@ -51,6 +51,28 @@ module.exports = {
 			});
 		});
 
+        express.post("/text-track/:filename/lang/:lang/label/:label", upload.single('file'), function (request, response) {
+        	var _params = request.params;
+            console.log("Storing text tracks" + _params.filename);
+            // request.file has keys: fieldname, fieldname: 'file', originalname: 'bunny-en.vtt',
+            // encoding: '7bit', mimetype: 'application/octet-stream', buffer: <Buffer ....>, size: 472 }
+			// request.params has only one key filename: 'video-timestamp.vtt'
+            FS.writeFileSync(fullFile(_params.filename), request.file.buffer);
+            response.status(200).send({'lang': _params.lang, 'label': _params.label});
+        });
+
+        express.get("/text-track/:filename", function(request, response) {
+            console.log("Streaming text tracks" + request.params.filename);
+			response.sendFile(fullFile(request.params.filename));
+        });
+
+        express.get("/text-track/:filename/lang/:lang/label/:label", function(request, response) {
+            console.log("Streaming detailed text tracks lang:" + request.params.lang + ', label: ' + request.params.label);
+            // response.sendFile(fullFile(request.params.filename));
+            response.sendFile(fullFile(request.params.filename));
+            response.status(200).send({'lang': request.params.lang, 'label': request.params.label});
+        });
+
 		return express;
 	},
 

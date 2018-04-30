@@ -5,18 +5,18 @@
 	"author": "Ziggeo",
 	"repository": "https://github.com/jsonize/nano-media-server",
 	"license": "Apache-2.0",
-    "engines": {
-	    "node": ""
- 	},
- 	"main": "server.js",
+	"engines": {
+		"node": ""
+	},
+	"main": "server.js",
 	"devDependencies": {
 		"grunt": "",
-        "grunt-contrib-jshint": ""
+		"grunt-contrib-jshint": ""
 	},
 	"dependencies": {
 		"express": "",
 		"multer": "",
-		"js-ffmpeg": "~0.0.14",
+		"js-ffmpeg": "~0.0.17",
 		"node-getopt": ""
-	}	
+	}
 }
