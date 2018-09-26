@@ -59,8 +59,6 @@ module.exports = {
 
       var sources = [audio_source];
 
-      console.log('->>', sources);
-
       console.log("Transcoding " + request.params.source + " -> " + request.params.target);
       Ffmpeg.ffmpeg_simple(sources, {output_type: "audio"}, target, null, null, ffmpegOptions).callback(function (error, value) {
         if (error)
