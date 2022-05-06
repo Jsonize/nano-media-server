@@ -89,6 +89,13 @@ module.exports = {
       // response.status(200).send({'filename': request.params.filename,'lang': request.params.lang, 'label': request.params.label});
     });
 
+    express.get("/ad/:name", function (request, response) {
+      const { name } = request.params;
+      const message = `Ad event with name: '${name}' was successfully triggered`;
+      console.log("Message: " + message);
+      response.status(200).send({message});
+    });
+
     return express;
   },
 
